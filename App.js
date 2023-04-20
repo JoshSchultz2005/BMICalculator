@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-  Alert,
   Text,
   ScrollView,
   StyleSheet,
@@ -33,11 +32,6 @@ export default class App extends Component {
     };
   }
 
-  calculateBMI = () => {
-
-    this.onSave();
-  }
-
   onLoad = async () => {
     try {
       const height = await AsyncStorage.getItem(HeightKey);
@@ -47,7 +41,6 @@ export default class App extends Component {
       this.setState({ BMI: bmi });
       this.setState({ content: SavedContent });
     } catch (error) {
-      Alert.alert('Error', 'There was an error while loading the data');
       console.log(error)
     }
   }
@@ -62,7 +55,6 @@ export default class App extends Component {
       await AsyncStorage.setItem(BMIKey, calculatedBMI);
       await AsyncStorage.setItem(contentKey, JSON.stringify(this.state.content));
     } catch (error) {
-      Alert.alert('Error', 'There was an error while saving the data');
       console.log(error)
     }
   }
@@ -86,8 +78,7 @@ export default class App extends Component {
             onChangeText={(height) => this.setState({Height: height})}
           >
           </TextInput>
-          <Pressable style={styles.button} 
-            onPress={this.calculateBMI}>
+          <Pressable style={styles.button} onPress={this.onSave}>
             <Text style={styles.buttonText}>
               Compute BMI
             </Text>
